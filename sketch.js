@@ -36,7 +36,7 @@ function preload(){
 
 function setup(){
   
-createCanvas(1200,300);
+createCanvas(600,300);
 // Moving background
 path=createSprite(100,150);
 path.addImage(pathImg);
@@ -48,9 +48,9 @@ mainCyclist.addAnimation("SahilRunning",mainRacerImg1);
 mainCyclist.scale=0.07;
   
 //set collider for mainCyclist
-
+mainCyclist.changeAnimation("SahilRunning",mainRacerImg1);
   
-gameOver = createSprite(650,150);
+gameOver = createSprite(300,150);
 gameOver.addImage(gameOverImg);
 gameOver.scale = 0.8;
 gameOver.visible = false;  
@@ -64,10 +64,13 @@ redCG = new Group();
 function draw() {
   background(0);
   
+  
+  
   drawSprites();
   textSize(20);
   fill(255);
-  text("Distance: "+ distance,900,30);
+  text("Distance: "+ distance,450,30);
+  
   
   if(gameState===PLAY){
     
@@ -122,8 +125,9 @@ function draw() {
     
 }else if (gameState === END) {
     gameOver.visible = true;
+    
     //Add code to show restart game instrution in text here
-  
+  text("press up arrow for restart the game",200,200);
   
     path.velocityX = 0;
     mainCyclist.velocityY = 0;
@@ -139,6 +143,11 @@ function draw() {
     redCG.setLifetimeEach(-1);
 
     //write condition for calling reset( )
+  
+     if(keyDown("UP_ARROW")) {
+       
+      reset();
+    }
 }
 }
 
@@ -171,7 +180,17 @@ function redCyclists(){
 
 //create reset function here
 
-
+function reset(){
+  gameState = PLAY;
+  gameOver.visible = false;
+  mainCyclist.addAnimation("SahilRunning",mainRacerImg1);
+  
+  pinkCG.destroyEach();
+  yellowCG.destroyEach();
+  redCG.destroyEach();
+  
+  distance = 0;
+}
 
 
 
